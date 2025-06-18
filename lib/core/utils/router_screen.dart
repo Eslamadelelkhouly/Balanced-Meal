@@ -1,4 +1,4 @@
-import 'package:balancedmeal/features/splash%20screen/presentation/views/splash_view.dart';
+import 'package:balancedmeal/features/welcom%20screen/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,7 +8,7 @@ abstract class RouterScreen {
     routes: [
       GoRoute(
         path: splash,
-        builder: (context,state) => const SplashView(),
+        builder: (context,state) => const WelcomView(),
       ),
     ],
   );
