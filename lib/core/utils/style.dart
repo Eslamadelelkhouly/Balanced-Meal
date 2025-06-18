@@ -10,4 +10,8 @@ abstract class AppStyle {
     fontSize: 20,
     fontWeight: FontWeight.w300,
   );
+  static TextStyle textStylesemibold50016poppins = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+  );
 }
