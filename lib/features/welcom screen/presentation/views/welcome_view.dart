@@ -1,4 +1,4 @@
-import 'package:balancedmeal/features/welcom%20screen/presentation/views/widgets/splash_view_body.dart';
+import 'package:balancedmeal/features/welcom%20screen/presentation/views/widgets/welcome_view_body.dart';
 import 'package:flutter/material.dart';
 
 class WelcomView extends StatelessWidget {
