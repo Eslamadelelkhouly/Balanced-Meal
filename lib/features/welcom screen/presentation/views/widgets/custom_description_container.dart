@@ -1,3 +1,4 @@
+import 'package:balancedmeal/core/utils/app_color.dart';
 import 'package:balancedmeal/core/utils/style.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class CustomDiscriptionContainer extends StatelessWidget {
         textAlign: TextAlign.center,
         'Craft your ideal meal effortlessly with our app. Select nutritious ingredients tailored to your taste and well-being.',
         style: AppStyle.textStyleregular20poppins.copyWith(
-          color: Colors.white,
+          color: AppColor.whitedarker,
         ),
       ),
     );
