@@ -1,11 +1,11 @@
 import 'package:balancedmeal/core/utils/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.text,
-    required this.iconField,
     required this.hinttext,
     required this.onSaved,
     required this.controller,
@@ -13,7 +13,6 @@ class CustomTextField extends StatelessWidget {
     this.suffix,
   });
   final String text;
-  final String iconField;
   final String hinttext;
   final String? Function(String?)? onSaved;
   final TextEditingController controller;
@@ -44,6 +43,7 @@ class CustomTextField extends StatelessWidget {
             },
             cursorColor: Colors.black,
             onSaved: onSaved,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               hintText: hinttext,
               hintStyle: AppStyle.textStylesemibold50016Questrial.copyWith(

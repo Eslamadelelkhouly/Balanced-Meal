@@ -10,10 +10,12 @@ class CustomDropDown extends StatefulWidget {
     required this.dropdowntext2,
     required this.text,
     required this.width,
+    this.onChanged,
   });
 
   final String hinttext, dropdowntext1, dropdowntext2, text;
   final double width;
+  final ValueChanged<String?>? onChanged;
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
@@ -117,6 +119,9 @@ class _CustomDropDownState extends State<CustomDropDown> {
               setState(() {
                 selectedValue = value;
               });
+              if (widget.onChanged != null) {
+                widget.onChanged!(value);
+              }
             },
             validator: (value) {
               if (value == null || value.isEmpty) {

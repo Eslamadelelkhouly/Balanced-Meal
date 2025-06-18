@@ -25,6 +25,7 @@ class WelcomViewBody extends StatelessWidget {
           bottom: 20,
           left: MediaQuery.of(context).size.width * 0.05,
           child: CustomButton(
+            statebutton: true,
             onPressed: () {
               GoRouter.of(context).push(RouterScreen.detials);
             },
