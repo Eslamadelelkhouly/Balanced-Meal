@@ -14,4 +14,12 @@ abstract class AppStyle {
     fontSize: 16,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle textStylesemibold50014poppins = GoogleFonts.poppins(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+  );
+  static TextStyle textStylesemibold50016Questrial = GoogleFonts.questrial(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+  );
 }

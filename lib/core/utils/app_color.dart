@@ -4,4 +4,5 @@ abstract class AppColor {
   static const Color orange = Color(0xffF25700);
   static const Color whitedarker = Color(0xffDADADA);
   static const Color whiteforgray = Color(0xffFBFBFB);
+  static const Color orangelight = Color(0xffFFEDE3);
 }
