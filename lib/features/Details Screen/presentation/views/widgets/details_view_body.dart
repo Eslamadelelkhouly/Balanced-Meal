@@ -125,7 +125,10 @@ class _DetailsViewBodyState extends State<DetailsViewBody> {
                         log(cal.toString());
                       }
 
-                      GoRouter.of(context).push(RouterScreen.home);
+                      GoRouter.of(context).push(
+                        RouterScreen.home,
+                        extra: cal,
+                      );
                     }
                   : null,
               text: 'Next',

@@ -4,21 +4,28 @@ import 'package:flutter/material.dart';
 class RowTitlAndDescription extends StatelessWidget {
   const RowTitlAndDescription({
     super.key,
+    required this.title,
+    required this.cal,
   });
+  final String title, cal;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          'Bell Pepper',
-          style: AppStyle.textStylesemibold50016poppins,
+        Expanded(
+          child: Text(
+            title,
+            style: AppStyle.textStylesemibold50016poppins,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        Spacer(),
+        const SizedBox(width: 8),
         Text(
-          '12 Cal',
+          '$cal cal',
           style: AppStyle.textStylesemibold50014poppins.copyWith(
-            color: Color(0xff959595),
+            color: const Color(0xff959595),
           ),
         ),
       ],

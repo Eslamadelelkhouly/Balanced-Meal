@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 
 class ContainerInfoBottom extends StatelessWidget {
   const ContainerInfoBottom({
-    super.key,
+    super.key, required this.cal,
   });
+  final String cal;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class ContainerInfoBottom extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '1000 Cal out of 1200 Cal',
+                  '1000 Cal out of ${cal} Cal',
                   style: AppStyle.textStylesemibold50014poppins.copyWith(
                     color: const Color(0xff959595),
                   ),
