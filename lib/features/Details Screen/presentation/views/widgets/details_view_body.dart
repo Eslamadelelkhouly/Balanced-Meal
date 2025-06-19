@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:balancedmeal/core/utils/app_color.dart';
+import 'package:balancedmeal/core/utils/router_screen.dart';
 import 'package:balancedmeal/core/widgets/custom_drop_down.dart';
 import 'package:balancedmeal/core/widgets/custom_text_field.dart';
 import 'package:balancedmeal/core/widgets/custpm_button.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DetailsViewBody extends StatefulWidget {
   const DetailsViewBody({super.key});
@@ -112,16 +114,18 @@ class _DetailsViewBodyState extends State<DetailsViewBody> {
                             (1.85 * double.parse(heightController.text)) -
                             (4.67 * double.parse(ageController.text)));
                         log(cal.toString());
-                      } if(gender == 'Male') {
+                      }
+                      if (gender == 'Male') {
                         cal = (666.47 +
                             (13.75 * double.parse(wightController.text)) +
                             (5 * double.parse(heightController.text)) -
                             (6.75 * double.parse(ageController.text)));
                         log(cal.toString());
-                      }
-                      else {
+                      } else {
                         log(cal.toString());
                       }
+
+                      GoRouter.of(context).push(RouterScreen.home);
                     }
                   : null,
               text: 'Next',
