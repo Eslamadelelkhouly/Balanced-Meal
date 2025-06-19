@@ -13,7 +13,7 @@ class ContainerInfoBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.18,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -68,7 +68,6 @@ class ContainerInfoBottom extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            RowOfContainerCircule(),
             CustomButton(
               text: 'Order',
               width: MediaQuery.of(context).size.width * 0.8,
