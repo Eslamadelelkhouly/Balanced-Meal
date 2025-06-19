@@ -1,6 +1,7 @@
 import 'package:balancedmeal/core/utils/app_color.dart';
 import 'package:balancedmeal/core/utils/style.dart';
 import 'package:balancedmeal/core/widgets/custpm_button.dart';
+import 'package:balancedmeal/features/Home/presentation/views/widgets/row_of_container_circule.dart';
 import 'package:flutter/material.dart';
 
 class ContainerInfoBottom extends StatelessWidget {
@@ -12,7 +13,7 @@ class ContainerInfoBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.18,
+      height: MediaQuery.of(context).size.height * 0.25,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -67,6 +68,7 @@ class ContainerInfoBottom extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
+            RowOfContainerCircule(),
             CustomButton(
               text: 'Order',
               width: MediaQuery.of(context).size.width * 0.8,
