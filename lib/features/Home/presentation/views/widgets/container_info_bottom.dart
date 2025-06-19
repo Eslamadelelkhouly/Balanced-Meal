@@ -1,6 +1,7 @@
 import 'package:balancedmeal/core/utils/app_color.dart';
 import 'package:balancedmeal/core/utils/style.dart';
 import 'package:balancedmeal/core/widgets/custpm_button.dart';
+import 'package:balancedmeal/features/Home/data/repos/get_product_repo_implementaion.dart';
 import 'package:balancedmeal/features/Home/presentation/views/widgets/row_of_container_circule.dart';
 import 'package:flutter/material.dart';
 
@@ -70,6 +71,9 @@ class ContainerInfoBottom extends StatelessWidget {
             ),
             CustomButton(
               text: 'Order',
+              onPressed: () {
+                GetProductRepoImplementaion().getProduct();
+              },
               width: MediaQuery.of(context).size.width * 0.8,
               height: 52,
               textColor: Colors.white,
