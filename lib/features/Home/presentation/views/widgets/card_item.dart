@@ -1,4 +1,3 @@
-// ✅ CardItem.dart (المطلوب تعديله)
 import 'package:balancedmeal/core/utils/style.dart';
 import 'package:balancedmeal/features/Home/presentation/views/widgets/button_add.dart';
 import 'package:balancedmeal/features/Home/presentation/views/widgets/row_of_container_circule.dart';
@@ -17,7 +16,7 @@ class CardItem extends StatefulWidget {
   });
 
   final String title, cal, salary, urlimg;
-  final void Function(int salary, int calories) onTotalSalaryChanged;
+  final void Function(int salary, int calories, int quantity) onTotalSalaryChanged;
 
   @override
   State<CardItem> createState() => _CardItemState();
@@ -33,7 +32,7 @@ class _CardItemState extends State<CardItem> {
     setState(() {
       quantity = newQty;
     });
-    widget.onTotalSalaryChanged(totalSalary, totalCalories);
+    widget.onTotalSalaryChanged(totalSalary, totalCalories, quantity);
   }
 
   @override
@@ -59,7 +58,11 @@ class _CardItemState extends State<CardItem> {
             width: 163,
             height: 108,
             child: CachedNetworkImage(
-              placeholder: (context, url) => const CircularProgressIndicator(),
+              placeholder: (context, url) => Center(
+                child: const CircularProgressIndicator(
+                  color: Colors.orange,
+                ),
+              ),
               errorWidget: (context, url, error) => const Icon(Icons.error),
               imageUrl: widget.urlimg,
               fit: BoxFit.cover,

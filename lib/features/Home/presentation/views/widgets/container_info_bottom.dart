@@ -1,8 +1,7 @@
+import 'dart:developer';
 import 'package:balancedmeal/core/utils/app_color.dart';
 import 'package:balancedmeal/core/utils/style.dart';
 import 'package:balancedmeal/core/widgets/custpm_button.dart';
-import 'package:balancedmeal/features/Home/data/repos/get_product_repo_implementaion.dart';
-import 'package:balancedmeal/features/Home/presentation/views/widgets/row_of_container_circule.dart';
 import 'package:flutter/material.dart';
 
 class ContainerInfoBottom extends StatelessWidget {
@@ -12,12 +11,16 @@ class ContainerInfoBottom extends StatelessWidget {
     required this.sumsallary,
     required this.sumcal,
   });
+
   final String cal;
   final String sumsallary;
   final String sumcal;
 
   @override
   Widget build(BuildContext context) {
+    // احسب النسبة مرة واحدة
+    final double percentage = calculatePercentage(cal: cal, sumcal: sumcal);
+
     return Container(
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.18,
@@ -36,9 +39,7 @@ class ContainerInfoBottom extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
-            SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Text(
@@ -47,16 +48,14 @@ class ContainerInfoBottom extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '${sumcal} Cal out of ${cal} Cal',
+                  '$sumcal Cal out of $cal Cal',
                   style: AppStyle.textStylesemibold50014poppins.copyWith(
                     color: const Color(0xff959595),
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Text(
@@ -65,30 +64,32 @@ class ContainerInfoBottom extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '\$ ${sumsallary}',
+                  '\$ $sumsallary',
                   style: AppStyle.textStylesemibold50016poppins.copyWith(
                     color: AppColor.orange,
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             CustomButton(
               text: 'Order',
-              onPressed: () {
-                GetProductRepoImplementaion().getProduct();
-              },
+              onPressed: () {},
               width: MediaQuery.of(context).size.width * 0.8,
               height: 52,
               textColor: Colors.white,
               backgrounColor: AppColor.orange,
-              statebutton: true,
+              statebutton: percentage > 0.1,
             ),
           ],
         ),
       ),
     );
+  }
+
+  double calculatePercentage({required String cal, required String sumcal}) {
+    final double calValue = double.tryParse(cal) ?? 1;
+    final double sumCalValue = double.tryParse(sumcal) ?? 0;
+    return sumCalValue / calValue;
   }
 }

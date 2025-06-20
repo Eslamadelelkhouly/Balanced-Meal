@@ -1,4 +1,5 @@
-// ✅ HomeViewBody.dart
+import 'dart:developer';
+
 import 'package:balancedmeal/core/utils/app_color.dart';
 import 'package:balancedmeal/features/Home/data/models/product_model.dart';
 import 'package:balancedmeal/features/Home/presentation/manager/cubit/get_product_cubit.dart';
@@ -34,6 +35,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   final ValueNotifier<int> totalAllSalariesNotifier = ValueNotifier<int>(0);
   final ValueNotifier<int> totalAllCaloriesNotifier = ValueNotifier<int>(0);
 
+  List<ProductItem> selectedVegetables = [];
+  List<ProductItem> selectedMeats = [];
+  List<ProductItem> selectedCarbs = [];
+
   void updateTotals() {
     totalAllSalariesNotifier.value =
         vegetablesNotifier.value + meatsNotifier.value + carbsNotifier.value;
@@ -62,7 +67,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       },
       builder: (context, state) {
         return ModalProgressHUD(
-          color: AppColor.orange,
+          progressIndicator: const CircularProgressIndicator(
+            color: AppColor.orange,
+          ),
+          color: AppColor.orangelight,
           inAsyncCall: state is GetProductLoading,
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -86,6 +94,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                             vegetablesCalories.value = calories;
                             updateTotals();
                           },
+                          onSelectedProductsChanged: (products) {
+                            selectedVegetables = products;
+                          },
                         ),
                         const SizedBox(height: 24),
                         CustomListView(
@@ -97,6 +108,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                             meatsCalories.value = calories;
                             updateTotals();
                           },
+                          onSelectedProductsChanged: (products) {
+                            selectedMeats = products;
+                          },
                         ),
                         const SizedBox(height: 24),
                         CustomListView(
@@ -107,6 +121,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                             carbsNotifier.value = salary;
                             carbsCalories.value = calories;
                             updateTotals();
+                          },
+                          onSelectedProductsChanged: (products) {
+                            selectedCarbs = products;
                           },
                         ),
                         const SizedBox(height: 24),
@@ -120,14 +137,19 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     return ValueListenableBuilder<int>(
                       valueListenable: totalAllCaloriesNotifier,
                       builder: (context, totalCalories, _) {
+                        final allSelectedProducts = [
+                          ...selectedVegetables,
+                          ...selectedMeats,
+                          ...selectedCarbs
+                        ];
+                        log('allSelectedProducts: ${allSelectedProducts.toString()}');
                         return Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
                           child: ContainerInfoBottom(
                             cal: widget.cal.toInt().toString(),
-                            sumsallary:
-                                totalAllCaloriesNotifier.value.toString(),
+                            sumsallary: totalSalary.toString(),
                             sumcal: totalCalories.toString(),
                           ),
                         );
