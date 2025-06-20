@@ -3,7 +3,14 @@ import 'package:balancedmeal/features/Home/presentation/views/widgets/container_
 import 'package:flutter/material.dart';
 
 class RowOfContainerCircule extends StatelessWidget {
-  const RowOfContainerCircule({super.key});
+  final int number;
+  final void Function(int) onQuantityChanged;
+
+  const RowOfContainerCircule({
+    super.key,
+    required this.number,
+    required this.onQuantityChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,24 +19,34 @@ class RowOfContainerCircule extends StatelessWidget {
       height: 25,
       child: Row(
         children: [
-          ContainerCircle(
-            icon: const Icon(
-              Icons.remove,
-              size: 16,
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              if (number > 0) onQuantityChanged(number - 1);
+            },
+            child: ContainerCircle(
+              icon: const Icon(
+                Icons.remove,
+                size: 16,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(width: 10),
           Text(
-            '1',
+            '$number',
             style: AppStyle.textStylesemibold50016poppins,
           ),
           const SizedBox(width: 10),
-          ContainerCircle(
-            icon: const Icon(
-              Icons.add,
-              size: 16,
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              onQuantityChanged(number + 1);
+            },
+            child: ContainerCircle(
+              icon: const Icon(
+                Icons.add,
+                size: 16,
+                color: Colors.white,
+              ),
             ),
           ),
         ],

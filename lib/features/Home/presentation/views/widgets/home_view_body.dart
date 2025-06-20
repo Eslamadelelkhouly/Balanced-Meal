@@ -1,3 +1,4 @@
+// ✅ HomeViewBody.dart
 import 'package:balancedmeal/core/utils/app_color.dart';
 import 'package:balancedmeal/features/Home/data/models/product_model.dart';
 import 'package:balancedmeal/features/Home/presentation/manager/cubit/get_product_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 class HomeViewBody extends StatefulWidget {
   const HomeViewBody({super.key, required this.cal});
   final double cal;
+
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
 }
@@ -20,11 +22,29 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     vegetables: [],
     meats: [],
   );
+
+  final ValueNotifier<int> vegetablesNotifier = ValueNotifier<int>(0);
+  final ValueNotifier<int> meatsNotifier = ValueNotifier<int>(0);
+  final ValueNotifier<int> carbsNotifier = ValueNotifier<int>(0);
+
+  final ValueNotifier<int> vegetablesCalories = ValueNotifier<int>(0);
+  final ValueNotifier<int> meatsCalories = ValueNotifier<int>(0);
+  final ValueNotifier<int> carbsCalories = ValueNotifier<int>(0);
+
+  final ValueNotifier<int> totalAllSalariesNotifier = ValueNotifier<int>(0);
+  final ValueNotifier<int> totalAllCaloriesNotifier = ValueNotifier<int>(0);
+
+  void updateTotals() {
+    totalAllSalariesNotifier.value =
+        vegetablesNotifier.value + meatsNotifier.value + carbsNotifier.value;
+    totalAllCaloriesNotifier.value =
+        vegetablesCalories.value + meatsCalories.value + carbsCalories.value;
+  }
+
   String erroMessage = '';
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<GetProductCubit>().getProduct();
   }
@@ -60,29 +80,60 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         CustomListView(
                           title: 'Vegetables',
                           productitem: productCategoryModel.vegetables,
+                          onGroupChanged: (
+                              {required salary, required calories}) {
+                            vegetablesNotifier.value = salary;
+                            vegetablesCalories.value = calories;
+                            updateTotals();
+                          },
                         ),
                         const SizedBox(height: 24),
                         CustomListView(
-                          productitem: productCategoryModel.meats,
                           title: 'Meats',
+                          productitem: productCategoryModel.meats,
+                          onGroupChanged: (
+                              {required salary, required calories}) {
+                            meatsNotifier.value = salary;
+                            meatsCalories.value = calories;
+                            updateTotals();
+                          },
                         ),
                         const SizedBox(height: 24),
                         CustomListView(
-                          productitem: productCategoryModel.carbs,
                           title: 'Carbs',
+                          productitem: productCategoryModel.carbs,
+                          onGroupChanged: (
+                              {required salary, required calories}) {
+                            carbsNotifier.value = salary;
+                            carbsCalories.value = calories;
+                            updateTotals();
+                          },
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                       ],
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: ContainerInfoBottom(
-                    cal: widget.cal.toInt().toString(),
-                  ),
+                ValueListenableBuilder<int>(
+                  valueListenable: totalAllSalariesNotifier,
+                  builder: (context, totalSalary, _) {
+                    return ValueListenableBuilder<int>(
+                      valueListenable: totalAllCaloriesNotifier,
+                      builder: (context, totalCalories, _) {
+                        return Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: ContainerInfoBottom(
+                            cal: widget.cal.toInt().toString(),
+                            sumsallary:
+                                totalAllCaloriesNotifier.value.toString(),
+                            sumcal: totalCalories.toString(),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ],
             ),
