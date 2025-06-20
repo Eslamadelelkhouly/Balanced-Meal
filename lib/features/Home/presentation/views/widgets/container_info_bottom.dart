@@ -1,8 +1,11 @@
 import 'dart:developer';
 import 'package:balancedmeal/core/utils/app_color.dart';
+import 'package:balancedmeal/core/utils/router_screen.dart';
 import 'package:balancedmeal/core/utils/style.dart';
 import 'package:balancedmeal/core/widgets/custpm_button.dart';
+import 'package:balancedmeal/features/Home/data/models/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ContainerInfoBottom extends StatelessWidget {
   const ContainerInfoBottom({
@@ -10,15 +13,16 @@ class ContainerInfoBottom extends StatelessWidget {
     required this.cal,
     required this.sumsallary,
     required this.sumcal,
+    required this.selectProduct,
   });
 
   final String cal;
   final String sumsallary;
   final String sumcal;
+  final List<ProductItem> selectProduct;
 
   @override
   Widget build(BuildContext context) {
-    // احسب النسبة مرة واحدة
     final double percentage = calculatePercentage(cal: cal, sumcal: sumcal);
 
     return Container(
@@ -74,7 +78,12 @@ class ContainerInfoBottom extends StatelessWidget {
             const SizedBox(height: 10),
             CustomButton(
               text: 'Order',
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).push(
+                  RouterScreen.orderSummary,
+                  extra: selectProduct,
+                );
+              },
               width: MediaQuery.of(context).size.width * 0.8,
               height: 52,
               textColor: Colors.white,
