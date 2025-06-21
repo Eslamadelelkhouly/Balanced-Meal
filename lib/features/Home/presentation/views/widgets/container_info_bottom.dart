@@ -15,6 +15,7 @@ class ContainerInfoBottom extends StatelessWidget {
     required this.sumcal,
     required this.selectProduct,
     required this.titlebutton,
+    required this.onpress,
   });
 
   final String cal;
@@ -22,6 +23,7 @@ class ContainerInfoBottom extends StatelessWidget {
   final String sumcal;
   final String titlebutton;
   final List<ProductItem> selectProduct;
+  final bool onpress;
 
   @override
   Widget build(BuildContext context) {
@@ -81,15 +83,19 @@ class ContainerInfoBottom extends StatelessWidget {
             CustomButton(
               text: titlebutton,
               onPressed: () {
-                GoRouter.of(context).push(
-                  RouterScreen.orderSummary,
-                  extra: {
-                    'selectProduct': selectProduct,
-                    'cal': cal,
-                    'sumsallary': sumsallary,
-                    'sumcal': sumcal,
-                  },
-                );
+                if (onpress) {
+                  GoRouter.of(context).push(
+                    RouterScreen.orderSummary,
+                    extra: {
+                      'selectProduct': selectProduct,
+                      'cal': cal,
+                      'sumsallary': sumsallary,
+                      'sumcal': sumcal,
+                    },
+                  );
+                }else {
+                  log('not');
+                }
               },
               width: MediaQuery.of(context).size.width * 0.8,
               height: 52,

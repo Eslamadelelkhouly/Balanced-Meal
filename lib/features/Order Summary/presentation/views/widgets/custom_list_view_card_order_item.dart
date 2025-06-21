@@ -3,8 +3,15 @@ import 'package:balancedmeal/features/Order%20Summary/presentation/views/widgets
 import 'package:flutter/material.dart';
 
 class CustomListViewCardOrderItem extends StatelessWidget {
-  const CustomListViewCardOrderItem({super.key, required this.selectProdut});
+  const CustomListViewCardOrderItem({
+    super.key,
+    required this.selectProdut,
+    required this.onQuantityChanged,
+  });
+
   final List<ProductItem> selectProdut;
+  final VoidCallback onQuantityChanged;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -15,6 +22,7 @@ class CustomListViewCardOrderItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: CardOrderItem(
               productItem: selectProdut[index],
+              onQuantityChanged: onQuantityChanged,
             ),
           );
         },

@@ -1,10 +1,9 @@
 import 'package:balancedmeal/features/Home/data/models/product_model.dart';
 import 'package:balancedmeal/features/Home/presentation/views/widgets/container_info_bottom.dart';
-import 'package:balancedmeal/features/Order%20Summary/presentation/views/widgets/card_order_item.dart';
 import 'package:balancedmeal/features/Order%20Summary/presentation/views/widgets/custom_list_view_card_order_item.dart';
 import 'package:flutter/material.dart';
 
-class OrderSmmaryViewBody extends StatelessWidget {
+class OrderSmmaryViewBody extends StatefulWidget {
   const OrderSmmaryViewBody({
     super.key,
     required this.cal,
@@ -12,10 +11,46 @@ class OrderSmmaryViewBody extends StatelessWidget {
     required this.sumcal,
     required this.selectProduct,
   });
+
   final List<ProductItem> selectProduct;
   final String cal;
   final String sumsallary;
   final String sumcal;
+
+  @override
+  State<OrderSmmaryViewBody> createState() => _OrderSmmaryViewBodyState();
+}
+
+class _OrderSmmaryViewBodyState extends State<OrderSmmaryViewBody> {
+  late List<ProductItem> selectedProducts;
+  double totalCalories = 0;
+  double totalSalary = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedProducts = widget.selectProduct;
+    calculateTotals();
+  }
+
+  void calculateTotals() {
+    double calSum = 0;
+    double priceSum = 0;
+    for (var product in selectedProducts) {
+      calSum += product.calories * product.quantity;
+      priceSum += product.totalPrice * product.quantity;
+    }
+
+    setState(() {
+      totalCalories = calSum;
+      totalSalary = priceSum;
+    });
+  }
+
+  void onQuantityChangedCallback() {
+    calculateTotals();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,7 +63,8 @@ class OrderSmmaryViewBody extends StatelessWidget {
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.022),
                 CustomListViewCardOrderItem(
-                  selectProdut: selectProduct,
+                  selectProdut: selectedProducts,
+                  onQuantityChanged: onQuantityChangedCallback,
                 ),
               ],
             ),
@@ -37,11 +73,12 @@ class OrderSmmaryViewBody extends StatelessWidget {
               left: 0,
               right: 0,
               child: ContainerInfoBottom(
+                onpress: false,
                 titlebutton: 'Confirm',
-                cal: cal,
-                sumsallary: sumsallary,
-                sumcal: sumcal,
-                selectProduct: selectProduct,
+                cal: totalCalories.toStringAsFixed(1),
+                sumsallary: totalSalary.toStringAsFixed(2),
+                sumcal: totalCalories.toStringAsFixed(1),
+                selectProduct: selectedProducts,
               ),
             ),
           ],

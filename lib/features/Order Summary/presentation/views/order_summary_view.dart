@@ -10,9 +10,10 @@ class OrderSummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String,dynamic> data =
-        GoRouterState.of(context).extra as Map<String,dynamic>;
-    final List<ProductItem> selectProduct = data['selectProduct'] as List<ProductItem>;
+    final Map<String, dynamic> data =
+        GoRouterState.of(context).extra as Map<String, dynamic>;
+    final List<ProductItem> selectProduct =
+        data['selectProduct'] as List<ProductItem>;
     final String cal = data['cal'] as String;
     final String sumsallary = data['sumsallary'] as String;
     final String sumcal = data['sumcal'] as String;

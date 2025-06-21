@@ -4,9 +4,36 @@ import 'package:balancedmeal/features/Home/presentation/views/widgets/row_of_con
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class CardOrderItem extends StatelessWidget {
-  const CardOrderItem({super.key, required this.productItem});
+class CardOrderItem extends StatefulWidget {
+  const CardOrderItem({
+    super.key,
+    required this.productItem,
+    required this.onQuantityChanged,
+  });
+
   final ProductItem productItem;
+  final VoidCallback onQuantityChanged;
+
+  @override
+  State<CardOrderItem> createState() => _CardOrderItemState();
+}
+
+class _CardOrderItemState extends State<CardOrderItem> {
+  late int quantity;
+
+  @override
+  void initState() {
+    super.initState();
+    quantity = widget.productItem.quantity;
+  }
+
+  void updateQuantity(int newQuantity) {
+    setState(() {
+      quantity = newQuantity;
+    });
+    widget.productItem.quantity = newQuantity;
+    widget.onQuantityChanged();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +59,8 @@ class CardOrderItem extends StatelessWidget {
             child: CachedNetworkImage(
               width: 76,
               height: 62,
-              imageUrl: productItem.imageUrl.isNotEmpty
-                  ? productItem.imageUrl
+              imageUrl: widget.productItem.imageUrl.isNotEmpty
+                  ? widget.productItem.imageUrl
                   : 'https://www.daysoftheyear.com/cdn-cgi/image/dpr=1%2Cf=auto%2Cfit=cover%2Cheight=650%2Cq=40%2Csharpen=1%2Cwidth=956/wp-content/uploads/fresh-spinach-day.jpg',
               fit: BoxFit.cover,
               placeholder: (context, url) =>
@@ -52,14 +79,14 @@ class CardOrderItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        productItem.foodName,
+                        widget.productItem.foodName,
                         style: AppStyle.textStylesemibold50016poppins,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      '\$${productItem.totalPrice}',
+                      '\$${widget.productItem.totalPrice}',
                       style: AppStyle.textStylesemibold50016poppins,
                     ),
                   ],
@@ -69,13 +96,13 @@ class CardOrderItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Cal ${productItem.calories}',
+                      'Cal ${widget.productItem.calories}',
                       style: AppStyle.textStylesemibold50014poppins
                           .copyWith(color: Colors.grey[700]),
                     ),
                     RowOfContainerCircule(
-                      number: productItem.quantity,
-                      onQuantityChanged: (_) {},
+                      number: quantity,
+                      onQuantityChanged: updateQuantity,
                     ),
                   ],
                 ),

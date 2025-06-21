@@ -12,8 +12,8 @@ class ProductCategoryModel {
 
 class ProductItem {
   final String foodName;
-  final int quantity;
-  final int totalPrice;
+  int quantity;
+  int totalPrice;
   final String imageUrl;
   final int calories;
 
