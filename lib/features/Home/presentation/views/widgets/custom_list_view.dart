@@ -14,7 +14,8 @@ class CustomListView extends StatefulWidget {
 
   final List<ProductItem> productitem;
   final String title;
-  final void Function({required int salary, required int calories}) onGroupChanged;
+  final void Function({required int salary, required int calories})
+      onGroupChanged;
   final void Function(List<ProductItem>) onSelectedProductsChanged;
 
   @override
@@ -67,13 +68,6 @@ class _CustomListViewState extends State<CustomListView> {
             color: Colors.black,
             fontWeight: FontWeight.w700,
           ),
-        ),
-        const SizedBox(height: 10),
-        ValueListenableBuilder<int>(
-          valueListenable: totalSalaryNotifier,
-          builder: (context, value, _) {
-            return Text('Total Salary: \$${value}');
-          },
         ),
         const SizedBox(height: 10),
         if (widget.productitem.isEmpty)

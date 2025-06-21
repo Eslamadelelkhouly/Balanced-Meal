@@ -1,5 +1,6 @@
 import 'package:balancedmeal/features/Details%20Screen/presentation/views/details_view.dart';
 import 'package:balancedmeal/features/Home/presentation/views/home_view.dart';
+import 'package:balancedmeal/features/Order%20Summary/presentation/views/order_summary_view.dart';
 import 'package:balancedmeal/features/Order%20Summary/presentation/views/widgets/order_smmary_view_body.dart';
 import 'package:balancedmeal/features/welcom%20screen/presentation/views/welcome_view.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ abstract class RouterScreen {
       ),
       GoRoute(
         path: orderSummary,
-        builder: (context, state) => const OrderSmmaryViewBody(),
+        builder: (context, state) => const OrderSummaryView(),
       ),
     ],
   );
