@@ -148,6 +148,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           left: 0,
                           right: 0,
                           child: ContainerInfoBottom(
+                            titlebutton: 'Place order',
                             selectProduct: allSelectedProducts,
                             cal: widget.cal.toInt().toString(),
                             sumsallary: totalSalary.toString(),

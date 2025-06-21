@@ -14,11 +14,13 @@ class ContainerInfoBottom extends StatelessWidget {
     required this.sumsallary,
     required this.sumcal,
     required this.selectProduct,
+    required this.titlebutton,
   });
 
   final String cal;
   final String sumsallary;
   final String sumcal;
+  final String titlebutton;
   final List<ProductItem> selectProduct;
 
   @override
@@ -77,11 +79,16 @@ class ContainerInfoBottom extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             CustomButton(
-              text: 'Order',
+              text: titlebutton,
               onPressed: () {
                 GoRouter.of(context).push(
                   RouterScreen.orderSummary,
-                  extra: selectProduct,
+                  extra: {
+                    'selectProduct': selectProduct,
+                    'cal': cal,
+                    'sumsallary': sumsallary,
+                    'sumcal': sumcal,
+                  },
                 );
               },
               width: MediaQuery.of(context).size.width * 0.8,
