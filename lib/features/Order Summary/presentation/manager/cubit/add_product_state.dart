@@ -12,7 +12,8 @@ final class AddProductSuccess extends AddProductState {
   AddProductSuccess(this.response);
 }
 final class AddProductFailure extends AddProductState {
-  final String error;
+  final Map<String, dynamic> errorData;
 
-  AddProductFailure(this.error);
+  AddProductFailure({required this.errorData});
+
 }

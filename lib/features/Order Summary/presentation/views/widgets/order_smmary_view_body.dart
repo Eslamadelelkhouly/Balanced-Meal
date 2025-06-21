@@ -1,7 +1,10 @@
 import 'package:balancedmeal/features/Home/data/models/product_model.dart';
 import 'package:balancedmeal/features/Home/presentation/views/widgets/container_info_bottom.dart';
+import 'package:balancedmeal/features/Order%20Summary/presentation/manager/cubit/add_product_cubit.dart';
 import 'package:balancedmeal/features/Order%20Summary/presentation/views/widgets/custom_list_view_card_order_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class OrderSmmaryViewBody extends StatefulWidget {
   const OrderSmmaryViewBody({
@@ -25,6 +28,8 @@ class _OrderSmmaryViewBodyState extends State<OrderSmmaryViewBody> {
   late List<ProductItem> selectedProducts;
   double totalCalories = 0;
   double totalSalary = 0;
+  Map<String, dynamic> success = {};
+  Map<String, dynamic> failuer = {};
 
   @override
   void initState() {
@@ -53,37 +58,57 @@ class _OrderSmmaryViewBodyState extends State<OrderSmmaryViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.022),
-                CustomListViewCardOrderItem(
-                  selectProdut: selectedProducts,
-                  onQuantityChanged: onQuantityChangedCallback,
+    return BlocConsumer<AddProductCubit, AddProductState>(
+      listener: (context, state) {
+        if (state is AddProductSuccess) {
+          success = state.response;
+        } else if (state is AddProductFailure) {
+          failuer = state.errorData;
+        }
+      },
+      builder: (context, state) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: [
+              ModalProgressHUD(
+                  progressIndicator: const CircularProgressIndicator(
+                    color: Colors.orange,
+                  ),
+                  inAsyncCall: state is AddProductLoading,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.022),
+                        CustomListViewCardOrderItem(
+                          selectProdut: selectedProducts,
+                          onQuantityChanged: onQuantityChangedCallback,
+                        ),
+                      ],
+                    ),
+                  )),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ContainerInfoBottom(
+                    onpress: false,
+                    titlebutton: 'Confirm',
+                    cal: totalCalories.toStringAsFixed(1),
+                    sumsallary: totalSalary.toStringAsFixed(2),
+                    sumcal: totalCalories.toStringAsFixed(1),
+                    selectProduct: selectedProducts,
+                  ),
                 ),
-              ],
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: ContainerInfoBottom(
-                onpress: false,
-                titlebutton: 'Confirm',
-                cal: totalCalories.toStringAsFixed(1),
-                sumsallary: totalSalary.toStringAsFixed(2),
-                sumcal: totalCalories.toStringAsFixed(1),
-                selectProduct: selectedProducts,
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

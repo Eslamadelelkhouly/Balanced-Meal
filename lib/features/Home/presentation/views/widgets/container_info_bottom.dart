@@ -4,8 +4,12 @@ import 'package:balancedmeal/core/utils/router_screen.dart';
 import 'package:balancedmeal/core/utils/style.dart';
 import 'package:balancedmeal/core/widgets/custpm_button.dart';
 import 'package:balancedmeal/features/Home/data/models/product_model.dart';
+import 'package:balancedmeal/features/Home/presentation/views/home_view.dart';
+import 'package:balancedmeal/features/Order%20Summary/presentation/manager/cubit/add_product_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ContainerInfoBottom extends StatelessWidget {
   const ContainerInfoBottom({
@@ -24,6 +28,51 @@ class ContainerInfoBottom extends StatelessWidget {
   final String titlebutton;
   final List<ProductItem> selectProduct;
   final bool onpress;
+
+  void _showSuccessDialog(
+    BuildContext context,
+    List<ProductItem> selectProduct,
+    String cal,
+    String sumsallary,
+    String sumcal,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          content: new CircularPercentIndicator(
+            radius: 60.0,
+            lineWidth: 5.0,
+            percent: calculatePercentage(cal: cal, sumcal: sumcal),
+            center: new Text(
+              "${(calculatePercentage(cal: cal, sumcal: sumcal) * 100).toStringAsFixed(1)}%",
+              style: AppStyle.textStylesemibold50016poppins,
+            ),
+            progressColor: AppColor.orange,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                GoRouter.of(context).push(
+                  RouterScreen.orderSummary,
+                  extra: {
+                    'selectProduct': selectProduct,
+                    'cal': cal,
+                    'sumsallary': sumsallary,
+                    'sumcal': sumcal,
+                  },
+                );
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,17 +133,17 @@ class ContainerInfoBottom extends StatelessWidget {
               text: titlebutton,
               onPressed: () {
                 if (onpress) {
-                  GoRouter.of(context).push(
-                    RouterScreen.orderSummary,
-                    extra: {
-                      'selectProduct': selectProduct,
-                      'cal': cal,
-                      'sumsallary': sumsallary,
-                      'sumcal': sumcal,
-                    },
+                  _showSuccessDialog(
+                    context,
+                    selectProduct,
+                    cal,
+                    sumsallary,
+                    sumcal,
                   );
-                }else {
-                  log('not');
+                } else {
+                  context.read<AddProductCubit>().addProduct(
+                        selectProduct: selectProduct,
+                      );
                 }
               },
               width: MediaQuery.of(context).size.width * 0.8,

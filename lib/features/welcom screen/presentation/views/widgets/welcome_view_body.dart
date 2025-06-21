@@ -12,31 +12,33 @@ class WelcomViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ContainerBackground(),
-        GradiantContainer(),
-        Positioned(
-          top: MediaQuery.of(context).size.height * 0.7,
-          left: MediaQuery.of(context).size.width * 0.05,
-          child: CustomDiscriptionContainer(),
-        ),
-        Positioned(
-          bottom: 20,
-          left: MediaQuery.of(context).size.width * 0.05,
-          child: CustomButton(
-            statebutton: true,
-            onPressed: () {
-              GoRouter.of(context).push(RouterScreen.detials);
-            },
-            text: 'Order',
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: 60,
-            textColor: Colors.white,
-            backgrounColor: AppColor.orange,
+    return Center(
+      child: Stack(
+        children: [
+          ContainerBackground(),
+          GradiantContainer(),
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.7,
+            left: MediaQuery.of(context).size.width * 0.05,
+            child: CustomDiscriptionContainer(),
           ),
-        ),
-      ],
+          Positioned(
+            bottom: 20,
+            left: MediaQuery.of(context).size.width * 0.05,
+            child: CustomButton(
+              statebutton: true,
+              onPressed: () {
+                GoRouter.of(context).push(RouterScreen.detials);
+              },
+              text: 'Order',
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 60,
+              textColor: Colors.white,
+              backgrounColor: AppColor.orange,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
